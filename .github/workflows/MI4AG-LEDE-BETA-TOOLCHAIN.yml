@@ -82,8 +82,8 @@ jobs:
       - name: Install Feeds
         id: feeds
         run: |
-          cd $OPENWRTROOT
-          chmod +x $OPENWRTROOT/scripts/*.sh
+          #cd $OPENWRTROOT
+          chmod +x $GITHUB_WORKSPACE/scripts/LEDE/*.sh
           $GITHUB_WORKSPACE/scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
@@ -96,8 +96,8 @@ jobs:
           cat config/lean.config >> $OPENWRTROOT/.config
           #cat config/wireguard.config >> $OPENWRTROOT/.config
           #cat config/helmi.config >> $OPENWRTROOT/.config
-          cd $OPENWRTROOT
-          $DIY_SH
+          #cd $OPENWRTROOT
+          $GITHUB_WORKSPACE/$DIY_SH
           #$OPENWRTROOT/scripts/preset-clash-core.sh armv8
           #$OPENWRTROOT/scripts/preset-v2raya.sh arm64-v8a
           #$OPENWRTROOT/scripts/preset-speedtest.sh aarch64
