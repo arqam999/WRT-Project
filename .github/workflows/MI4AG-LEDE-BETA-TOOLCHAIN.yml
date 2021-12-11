@@ -82,7 +82,7 @@ jobs:
         run: |
           cd $OPENWRTROOT
           chmod +x scripts/*.sh
-          scripts/LEDE/hook-feeds.sh
+          /workdir/openwrt/scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
         run: |
@@ -95,7 +95,7 @@ jobs:
           #cat config/wireguard.config >> $OPENWRTROOT/.config
           #cat config/helmi.config >> $OPENWRTROOT/.config
           #cd $OPENWRTROOT
-          $OPENWRTROOT/$DIY_SH
+          /workdir/openwrt/$DIY_SH
           #$OPENWRTROOT/scripts/preset-clash-core.sh armv8
           #$OPENWRTROOT/scripts/preset-v2raya.sh arm64-v8a
           #$OPENWRTROOT/scripts/preset-speedtest.sh aarch64
