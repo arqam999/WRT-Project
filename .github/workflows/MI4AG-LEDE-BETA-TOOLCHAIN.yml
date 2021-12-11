@@ -81,8 +81,8 @@ jobs:
         id: feeds
         run: |
           #cd $OPENWRTROOT
-          chmod +x $OPENWRTROO/scripts/*.sh
-          $OPENWRTROO/scripts/LEDE/hook-feeds.sh
+          chmod +x $OPENWRTROOT/scripts/*.sh
+          ../scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
         run: |
