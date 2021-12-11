@@ -82,7 +82,7 @@ jobs:
         run: |
           cd $OPENWRTROOT
           chmod +x ../scripts/*.sh
-          ../scripts/LEDE/hook-feeds.sh
+          $GITHUB_ENV/scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
         run: |
