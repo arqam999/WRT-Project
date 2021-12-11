@@ -82,7 +82,7 @@ jobs:
         run: |
           #cd $OPENWRTROOT
           chmod +x $OPENWRTROOT/scripts/*.sh
-          ../scripts/LEDE/hook-feeds.sh
+          $OPENWRTROOT/scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
         run: |
@@ -94,12 +94,12 @@ jobs:
           cat config/lean.config >> $OPENWRTROOT/.config
           cat config/wireguard.config >> $OPENWRTROOT/.config
           cat config/helmi.config >> $OPENWRTROOT/.config
-          cd $OPENWRTROOT
-          ../$DIY_SH
-          #../scripts/preset-clash-core.sh armv8
-          #../scripts/preset-v2raya.sh arm64-v8a
-          #../scripts/preset-speedtest.sh aarch64
-          #../scripts/preset-terminal-tools.sh
+          #cd $OPENWRTROOT
+          $OPENWRTROOT/$DIY_SH
+          #$OPENWRTROOT/scripts/preset-clash-core.sh armv8
+          #$OPENWRTROOT/scripts/preset-v2raya.sh arm64-v8a
+          #$OPENWRTROOT/scripts/preset-speedtest.sh aarch64
+          #$OPENWRTROOT/scripts/preset-terminal-tools.sh
 
 
       - name: Download Package
