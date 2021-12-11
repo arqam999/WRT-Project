@@ -20,6 +20,8 @@ on:
         default: 'true'
 
 env:
+  TOOLCHAIN_TAG: coolsnowwolf-lede-master
+  TOOLCHAIN_NAME: toolchain-image-coolsnowwolf-lede-master-xiaomi_mi-router-4a-gigabit.img
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.lede
@@ -59,13 +61,18 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-
-    - name: Clone source code
-      working-directory: /workdir
+        
+        
+        
+    - name: Prepare Toolchain Image
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH openwrt
-        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        wget -q https://github.com/gilagajet/OpenWrt-Toolchain/releases/download/$TOOLCHAIN_TAG/$TOOLCHAIN_NAME -O toolchain-image.img
+        mkdir openwrt-ro openwrt workdir overlay
+        sudo mount -o loop toolchain-image.img openwrt-ro
+        sudo mount -t overlay overlay -o lowerdir=openwrt-ro,upperdir=overlay,workdir=workdir openwrt
+        cd openwrt
+        git pull
 
     - name: Load custom feeds
       run: |
