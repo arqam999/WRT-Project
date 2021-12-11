@@ -83,7 +83,7 @@ jobs:
         id: feeds
         run: |
           cd $OPENWRTROOT
-          chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+          chmod +x $OPENWRTROOT/scripts/*.sh
           $GITHUB_WORKSPACE/scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
