@@ -1,0 +1,11 @@
+src-git packages https://git.openwrt.org/feed/packages.git;openwrt-21.02
+src-git luci https://git.openwrt.org/project/luci.git;openwrt-21.02
+src-git routing https://git.openwrt.org/feed/routing.git;openwrt-21.02
+src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-21.02
+
+
+#src-git kenzo https://github.com/kenzok8/jell
+#src-git mtk https://github.com/Nossiac/mtk-openwrt-feeds.git
+#src-git jerry https://github.com/jerrykuku/luci-theme-argon.git
+src-git xiao https://github.com/xiaorouji/openwrt-passwall
+#src-git helloworld https://github.com/fw876/helloworld.git
