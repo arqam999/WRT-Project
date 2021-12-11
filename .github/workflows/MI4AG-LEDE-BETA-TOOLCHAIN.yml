@@ -92,8 +92,8 @@ jobs:
           cat config/passwall.config >> $OPENWRTROOT/.config
           cat config/ssr-plus.config >> $OPENWRTROOT/.config
           cat config/lean.config >> $OPENWRTROOT/.config
-          cat config/wireguard.config >> $OPENWRTROOT/.config
-          cat config/helmi.config >> $OPENWRTROOT/.config
+          #cat config/wireguard.config >> $OPENWRTROOT/.config
+          #cat config/helmi.config >> $OPENWRTROOT/.config
           #cd $OPENWRTROOT
           $OPENWRTROOT/$DIY_SH
           #$OPENWRTROOT/scripts/preset-clash-core.sh armv8
