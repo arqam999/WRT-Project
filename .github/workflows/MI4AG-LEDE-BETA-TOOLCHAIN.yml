@@ -1,205 +1,234 @@
-#
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
+#=================================================
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
-#
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
+#=================================================
 
-name:  Mi4A G LEDE BETA V1 TOOLCHAIN
+name: Mi 4A Gigabit LEDE Toolchain
 
 on:
-  repository_dispatch:
   workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: true
-        default: 'true'
+#  schedule:
+#    - cron: 0 17 * * *
+#  watch:
+#    types: started
 
 env:
   TOOLCHAIN_TAG: coolsnowwolf-lede-master
   TOOLCHAIN_NAME: toolchain-image-coolsnowwolf-lede-master-xiaomi_mi-router-4a-gigabit.img
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.lede
   CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.config
-  DIY_P1_SH: scripts/LEDE/hook-feeds.sh
-  DIY_P2_SH: scripts/LEDE/lean-openwrt.sh
-  UPLOAD_BIN_DIR: false
+  DIY_SH: scripts/LEDE/lean-openwrt.sh
+  WEBROOT: /data/dnmp/www/openwrt.cc
   UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: Mi_4A_Gigabit_V21.02
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-20.04
 
+    outputs:
+      OPENWRTROOT: ${{ steps.prepare.outputs.OPENWRTROOT }}
+      PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
+      TARGET: ${{ steps.compile.outputs.TARGET }}
+      SUBTARGET: ${{ steps.compile.outputs.SUBTARGET }}
+      FIRMWARE: ${{ steps.compile.outputs.FIRMWARE }}
+      GENERATE_STATUS: ${{ steps.generate.outputs.GENERATE_STATUS }}
+
     steps:
-    #- name: WeChat notification #WeChat Push Notification
-    #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=Firmware ${{ env.FILE_NAME }} starting to compile.
-    - name: Telegram notification #Telegram Push Notification
-      run: curl "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=Firmware ${{ env.FILE_NAME }} starting to compile."
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004) rdate
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          sudo ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+          sudo timedatectl set-timezone "$TZ"
+          docker image prune -a -f
 
-    - name: Checkout
-      uses: actions/checkout@main
+      - name: Free Up More Space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 256
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          overprovision-lvm: 'true'
 
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
-        sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
-        
-        
-        
-    - name: Prepare Toolchain Image
-      run: |
-        df -hT $PWD
-        wget -q https://github.com/gilagajet/OpenWrt-Toolchain/releases/download/$TOOLCHAIN_TAG/$TOOLCHAIN_NAME -O toolchain-image.img
-        mkdir openwrt-ro openwrt workdir overlay
-        sudo mount -o loop toolchain-image.img openwrt-ro
-        sudo mount -t overlay overlay -o lowerdir=openwrt-ro,upperdir=overlay,workdir=workdir openwrt
-        cd openwrt
-        git pull
+      - name: Checkout
+        uses: actions/checkout@main
 
-    - name: Load custom feeds
-      run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-        chmod +x $DIY_P1_SH
-        cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P1_SH
+      - name: Prepare Toolchain Image
+        id: prepare
+        run: |
+          df -hT $PWD
+          wget -q https://github.com/gilagajet/OpenWrt-Toolchain/releases/download/$TOOLCHAIN_TAG/$TOOLCHAIN_NAME -O toolchain-image.img
+          mkdir openwrt-ro openwrt workdir overlay
+          sudo mount -o loop toolchain-image.img openwrt-ro
+          sudo mount -t overlay overlay -o lowerdir=openwrt-ro,upperdir=overlay,workdir=workdir openwrt
+          cd openwrt
+          echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=OPENWRTROOT::$(echo $PWD)"
+          git pull
 
-    - name: Update feeds
-      run: cd openwrt && ./scripts/feeds update -a
+      - name: Install Feeds
+        id: feeds
+        run: |
+          cd $OPENWRTROOT
+          chmod +x ../scripts/*.sh
+          ../scripts/LEDE/hook-feeds.sh
 
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
+      - name: Load Custom Configuration
+        run: |
+          [ -e files ] && mv files $OPENWRTROOT/files
+          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
+          cat config/themes.config >> $OPENWRTROOT/.config
+          cat config/passwall.config >> $OPENWRTROOT/.config
+          cat config/ssr-plus.config >> $OPENWRTROOT/.config
+          cat config/lean.config >> $OPENWRTROOT/.config
+          cat config/wireguard.config >> $OPENWRTROOT/.config
+          cat config/helmi.config >> $OPENWRTROOT/.config
+          cd $OPENWRTROOT
+          ../$DIY_SH
+          #../scripts/preset-clash-core.sh armv8
+          #../scripts/preset-v2raya.sh arm64-v8a
+          #../scripts/preset-speedtest.sh aarch64
+          #../scripts/preset-terminal-tools.sh
 
-    - name: Load custom configuration
-      run: |
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cat config/themes.config >> openwrt/.config
-        cat config/passwall.config >> openwrt/.config
-        cat config/ssr-plus.config >> openwrt/.config
-        cat config/lean.config >> openwrt/.config
-        cat config/wireguard.config >> openwrt/.config
-        cat config/helmi.config >> openwrt/.config
-        chmod +x $DIY_P2_SH
-        cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH
-        
-#    - name: Enable Bypass Dependencies
-#      run: |
-#        find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
-#        find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}        
 
-#    - name: SSH connection to Actions
-#      uses: P3TERX/ssh2actions@v1.0.0
-#      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-#      env:
-#        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-#        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      - name: Download Package
+        id: package
+        run: |
+          cd $OPENWRTROOT
+          make defconfig
+          make download -j16 && make download -j16
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
 
-    - name: Download package
-      id: package
-      run: |
-        cd openwrt
-        make defconfig
-        make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+      - name: Compile Tools
+        id: tools
+        run: |
+          cd $OPENWRTROOT
+          echo -e "$(nproc) thread compile"
+          make tools/compile -j$(nproc) || make tools/compile -j1 V=s
 
-    - name: Compile the firmware
-      id: compile
-      run: |
-        cd openwrt
-        mkdir -p files/etc/uci-defaults/
-        cp $GITHUB_WORKSPACE/scripts/LEDE/init-settings.sh files/etc/uci-defaults/99-init-settings
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "::set-output name=status::success"
-        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+      - name: Compile Packages
+        id: compile
+        run: |
+          cd $OPENWRTROOT
+          echo -e "$(nproc) thread compile"
+          make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+          make diffconfig
+          make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+          make package/index
+          cd $OPENWRTROOT/bin/packages/*
+          PLATFORM=$(basename `pwd`)
+          echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
+          echo "::set-output name=PLATFORM::$(echo $PLATFORM)"
+          cd $OPENWRTROOT/bin/targets/*
+          TARGET=$(basename `pwd`)
+          echo "TARGET=$TARGET" >> $GITHUB_ENV
+          echo "::set-output name=TARGET::$(echo $TARGET)"
+          cd *
+          SUBTARGET=$(basename `pwd`)
+          echo "SUBTARGET=$SUBTARGET" >> $GITHUB_ENV
+          echo "::set-output name=SUBTARGET::$(echo $SUBTARGET)"
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=FIRMWARE::$(echo $PWD)"
+          echo "::set-output name=COMPILE_STATUS::success"
 
-    - name: Check space usage
-      if: (!cancelled())
-      run: df -hT
+      - name: Generate Firmware
+        if: steps.compile.outputs.COMPILE_STATUS == 'success'
+        id: generate
+        run: |
+          cd data/opkg
+          sed -i "s/subtarget/$SUBTARGET/g" distfeeds*.conf
+          sed -i "s/target\//$TARGET\//g" distfeeds*.conf
+          sed -i "s/platform/$PLATFORM/g" distfeeds*.conf
+          cd $OPENWRTROOT
+          mkdir -p files/etc/uci-defaults/
+          cp ../scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
+          #mkdir -p files/etc/opkg
+          #cp ../data/opkg/distfeeds.conf.mirror files/etc/opkg
+          #mkdir -p files/www/snapshots
+          #cp -r bin/targets files/www/snapshots
+          #cp ../data/opkg/distfeeds.conf files/etc/opkg
+          #mkdir -p files/www/ipv6-modules
+          #cp bin/packages/$PLATFORM/luci/luci-proto-ipv6* files/www/ipv6-modules
+          #cp bin/packages/$PLATFORM/base/{ipv6helper*,odhcpd-ipv6only*,odhcp6c*,6in4*} "files/www/ipv6-modules"
+          #cp bin/targets/$TARGET/$SUBTARGET/packages/{ip6tables*,kmod-nf-nat6*,kmod-ipt-nat6*,kmod-sit*,kmod-ip6tables-extra*,kmod-iptunnel*} "files/www/ipv6-modules"
+          #mkdir -p files/bin
+          #cp ../scripts/ipv6-helper.sh files/bin/ipv6-helper
+          make package/install -j$(nproc) || make package/install -j1 V=s
+          make target/install -j$(nproc) || make target/install -j1 V=s
+          make checksum
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+          echo "::set-output name=GENERATE_STATUS::success"
 
-    - name: Upload bin directory
-      uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin
+      - name: Organize Files
+        id: organize
+        if: env.UPLOAD_FIRMWARE == 'true' && steps.generate.outputs.GENERATE_STATUS == 'success' && !cancelled()
+        run: |
+          #find . -type f -name '*.ipk' | while read FILE ; do
+            #echo -e $(readlink -f ${FILE}) ;
+          #done
+          cd openwrt/bin/targets/*/*
+          rm -rf packages
+          find . -type f -name 'openwrt-*' | while read FILE ; do
+            newfile="$(echo ${FILE} | sed -e 's/openwrt-/gigawrt-/')" ;
+            echo -e $(readlink -f ${FILE}) ;
+            mv "${FILE}" "${newfile}" ;
+          done
+          find . -type f -name 'config.buildinfo' -exec mv "{}" "gigawrt-config-$DEVICE_NAME.txt" \;
+          find . -type f -name 'sha256sums' -exec mv "{}" "gigawrt-sha256sums-$DEVICE_NAME.txt" \;
+          #find . -type f -name 'sha256sums' | while read FILE ; do
+            #sed -i 's/openwrt-/gigawrt-/g' ${FILE} ;
+            #echo -e $(readlink -f ${FILE}) ;
+          #done
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+          echo "::set-output name=ORGANIZE_STATUS::success"
 
-    - name: Organize files
-      id: organize
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
+      - name: Delete Older Releases and Tags
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        if: steps.generate.outputs.GENERATE_STATUS == 'success' && steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          keep_latest: 30
+          delete_tags: true
+          delete_tag_pattern: gigawrt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
+      - name: Generate New Release Tag
+        id: tag
+        if: steps.generate.outputs.GENERATE_STATUS == 'success' && steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+        run: |
+          sleep 20
+          echo "::set-output name=release_tag::gigawrt-${{ env.FILE_DATE }}"
+          touch release.txt
+          echo "::set-output name=status::success"
 
-    - name: Generate release tag
-      id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
-        touch release.txt
-        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        echo "::set-output name=status::success"
+      - name: Upload Firmware Files to GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: steps.generate.outputs.GENERATE_STATUS == 'success' && steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          prerelease: true
+          name: GiGaWRT ${{ env.FILE_DATE }}
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          files: ${{ env.FIRMWARE }}/*
 
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
-
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 14
-        keep_minimum_runs: 3
-
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 3
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#- name: WeChat notification #WeChat Push Notification
-    #  if: steps.organize.outputs.status == 'success' && !cancelled()
-    #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=Congratulations! Firmware ${{ env.FILE_NAME }} successfully uploaded.
-    - name: TG Firmware done compile notification #Telegram Push Notification
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=Congratulations! Firmware ${{ env.FILE_NAME }} successfully uploaded."
+      - name: Delete Workflow Runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 2
+          keep_minimum_runs: 3
