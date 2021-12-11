@@ -80,9 +80,9 @@ jobs:
       - name: Install Feeds
         id: feeds
         run: |
-          #cd $OPENWRTROOT
-          chmod +x $OPENWRTROOT/scripts/*.sh
-          $OPENWRTROOT/scripts/LEDE/hook-feeds.sh
+          cd $OPENWRTROOT
+          chmod +x scripts/*.sh
+          scripts/LEDE/hook-feeds.sh
 
       - name: Load Custom Configuration
         run: |
