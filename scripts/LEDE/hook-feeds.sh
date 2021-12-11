@@ -49,8 +49,6 @@ cp -r temp/luci/applications/luci-app-ramfree luci/applications/luci-app-ramfree
 # Add luci-theme-darkmatter
 cp -r temp/luci/themes/luci-theme-darkmatter luci/themes/luci-theme-darkmatter
 
-# Add luci-app-ttyd
-#cp -r temp/luci/applications/luci-app-ttyd luci/applications/luci-app-ttyd
 
 # Clearing temp directory
 rm -rf temp
