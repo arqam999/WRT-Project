@@ -86,7 +86,7 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         cat config/themes.config >> openwrt/.config
         cat config/passwall.config >> openwrt/.config
-        #cat config/ssr-plus.config >> openwrt/.config
+        cat config/ssr-plus.config >> openwrt/.config
         #cat config/lean.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
         #cat config/helmi.config >> openwrt/.config
