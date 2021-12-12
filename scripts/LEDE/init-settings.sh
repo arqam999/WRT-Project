@@ -69,13 +69,6 @@ uci commit system
 # run "sambaset" using terminal to set it up
 #chmod +x /bin/sambaset
 
-# Add refresh IP Address for QMI Modems, such as LT4220
-# Script by Rudi Hartono https://www.facebook.com/rud18
-#chmod +x /bin/ipqmi
-
-# Fix luci-app-atinout-mod by 4IceG
-#chmod +x /usr/bin/luci-app-atinout
-
 # Fix for xderm mini gui if trojan is not installed
 #ln -sf /usr/sbin/trojan /usr/bin/trojan
 
@@ -177,30 +170,8 @@ ip6tables -t mangle -I PREROUTING ! -p icmpv6 -i  -j HL --hl-set 64
 EOF
 /etc/config/firewall restart
 
-# Fix Architecture overview for s9xxx amlogic and Uninstall luci-app-amlogic for Raspberry Pi 3
-#if grep -q "amlogic" /sbin/cpuinfo; then
-#	sed -i "s#bcm27xx/bcm2710#armvirt/64#iIg" /etc/openwrt_release
-#else
-#	opkg remove luci-app-amlogic
-#fi
-
-# Fix 3ginfo
-#chmod +x /etc/init.d/3ginfo
-#chmod +x /usr/share/3ginfo/scripts/*
-#chmod +x /usr/share/3ginfo/cgi-bin/*
-
 # Fix xdrtool: Xderm Mini Tool Script permission
 #chmod +x /bin/xdrtool
-
-# Fix atinout permission
-#chmod +x /sbin/set_at_port.sh
-
-# Fix sms tool
-#chmod +x /etc/init.d/smsled
-#chmod +x /sbin/cronsync.sh
-#chmod +x /sbin/set_sms_ports.sh
-#chmod +x /sbin/smsled-init.sh
-#chmod +x /sbin/smsled.sh
 
 # Add wegare123 stl tool
 # run "stl" using terminal for use
@@ -215,10 +186,6 @@ EOF
 #touch /root/.ssh/config
 #touch /root/akun/stl.txt
 #touch /root/akun/ipmodem.txt 
-
-# Add wifi id seamless autologin by kopijahe
-# run "kopijahe" using terminal for use
-#chmod +x /bin/kopijahe
 
 #-----------------------------------------------------------------------------
 #   Start of @helmiau additionals menu
