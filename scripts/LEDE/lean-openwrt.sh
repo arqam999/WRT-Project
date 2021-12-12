@@ -108,7 +108,3 @@ echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
 
 # Add stunnel
 #echo 'CONFIG_PACKAGE_stunnel=y' >> .config
-
-# Add mwan3
-echo 'CONFIG_PACKAGE_luci-app-mwan3=y' >> .config
-echo 'CONFIG_PACKAGE_mwan3=y' >> .config 
