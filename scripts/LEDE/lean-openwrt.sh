@@ -15,7 +15,7 @@ sed -i 's/192.168.1.1/192.168.2.1/g' $HWOSDIR/bin/config_generate
 pushd package/lean
 
 # Add luci-app-ssr-plus
-git clone --depth=1 https://github.com/fw876/helloworld
+#git clone --depth=1 https://github.com/fw876/helloworld
 
 # Remove luci-app-uugamebooster and luci-app-xlnetacc
 #rm -rf luci-app-uugamebooster
