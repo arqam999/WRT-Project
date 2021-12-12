@@ -68,6 +68,7 @@ sed -i "s/${orig_version}/${orig_version} ${date_version}/g" zzz-default-setting
 sed -i "s/zh_cn/auto/g" zzz-default-settings
 sed -i "s/uci set system.@system[0].timezone=CST-8/uci set system.@system[0].hostname=Mi4AG\nuci set system.@system[0].timezone=MYT-8/g" zzz-default-settings
 sed -i "s/Shanghai/Kuala Lumpur/g" zzz-default-settings
+sed -i "/sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow/" zzz-default-settings
 popd
 
 # Fix mt76 wireless driver
