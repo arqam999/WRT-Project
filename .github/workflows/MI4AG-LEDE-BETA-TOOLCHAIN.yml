@@ -93,8 +93,8 @@ jobs:
           cat config/themes.config >> $OPENWRTROOT/.config
           cat config/passwall.config >> $OPENWRTROOT/.config
           #cat config/ssr-plus.config >> $OPENWRTROOT/.config
-          cat config/lean.config >> $OPENWRTROOT/.config
-          cat config/wireguard.config >> $OPENWRTROOT/.config
+          #cat config/lean.config >> $OPENWRTROOT/.config
+          #cat config/wireguard.config >> $OPENWRTROOT/.config
           #cat config/helmi.config >> $OPENWRTROOT/.config
           #cd $OPENWRTROOT
           $GITHUB_WORKSPACE/$DIY_SH
