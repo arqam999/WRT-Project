@@ -7,6 +7,7 @@
 #--------------------------------------------------------
 #   If you use some codes frome here, please give credit to www.helmiau.com
 #--------------------------------------------------------
+clear
 echo "==== IP Detail Information ====" > ipinfo.txt
 curl -s http://ip-api.com/json/\?fields=country,countryCode,region,regionName,city,timezone,isp,org,as,asname,query >> ipinfo.txt
 sed -i 's/{"//g' ipinfo.txt
