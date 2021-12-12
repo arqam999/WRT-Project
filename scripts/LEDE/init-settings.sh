@@ -192,8 +192,15 @@ EOF
 #-----------------------------------------------------------------------------
 
 # LuCI -> System -> Terminal (a.k.a) luci-app-ttyd without login
-sed -i 's/login/login -f root/g' /etc/config/ttyd
-/etc/config/ttyd restart
+if ! grep -q "/bin/login -f root" /etc/config/ttyd; then
+	cat << "EOF" > /etc/config/ttyd
+config ttyd
+	option interface '@lan'
+	option command '/bin/login -f root'
+EOF
+	logger "  log : Terminal ttyd patched..."
+	echo -e "  log : Terminal ttyd patched..."
+fi
 
 # Add reboot, poweroff, shutdown, shadowsocksr++ restart/stop, mwan3 restart to LuCI -> System -> Custom Command
 if ! grep -q "Shutdown" /etc/config/luci; then
