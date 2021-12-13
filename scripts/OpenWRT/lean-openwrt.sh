@@ -12,7 +12,7 @@ HWOSDIR="package/base-files/files"
 sed -i 's/192.168.1.1/192.168.2.1/g' $HWOSDIR/bin/config_generate
 
 # Switch dir to package/lean
-pushd package/lean
+#pushd package/lean
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
@@ -22,7 +22,7 @@ git clone --depth=1 https://github.com/fw876/helloworld
 #rm -rf luci-app-xlnetacc
 
 # Exit from package/lean dir
-popd
+#popd
 
 # Clone community packages to package/community
 mkdir package/community
@@ -95,16 +95,16 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentopd ken
 popd
 
 # Mod zzz-default-settings
-pushd package/lean/default-settings/files
-sed -i '/http/d' zzz-default-settings
-sed -i '/18.06/d' zzz-default-settings
-export orig_version=$(cat "zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')
-export date_version=$(date -d "$(rdate -n -4 -p pool.ntp.org)" +'%Y-%m-%d')
-sed -i "s/${orig_version}/${orig_version} ${date_version}/g" zzz-default-settings
-sed -i "s/zh_cn/auto/g" zzz-default-settings
-sed -i "s/uci set system.@system[0].timezone=CST-8/uci set system.@system[0].hostname=Mi4AG\nuci set system.@system[0].timezone=MYT-8/g" zzz-default-settings
-sed -i "s/Shanghai/Kuala Lumpur/g" zzz-default-settings
-popd
+#pushd package/lean/default-settings/files
+#sed -i '/http/d' zzz-default-settings
+#sed -i '/18.06/d' zzz-default-settings
+#export orig_version=$(cat "zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')
+#export date_version=$(date -d "$(rdate -n -4 -p pool.ntp.org)" +'%Y-%m-%d')
+#sed -i "s/${orig_version}/${orig_version} ${date_version}/g" zzz-default-settings
+#sed -i "s/zh_cn/auto/g" zzz-default-settings
+#sed -i "s/uci set system.@system[0].timezone=CST-8/uci set system.@system[0].hostname=Mi4AG\nuci set system.@system[0].timezone=MYT-8/g" zzz-default-settings
+#sed -i "s/Shanghai/Kuala Lumpur/g" zzz-default-settings
+#popd
 
 # Fix mt76 wireless driver
 pushd package/kernel/mt76
