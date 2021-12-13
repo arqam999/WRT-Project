@@ -106,4 +106,4 @@ echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
 
 
 # Add stunnel
-echo 'CONFIG_PACKAGE_stunnel=y' >> .config
+#echo 'CONFIG_PACKAGE_stunnel=y' >> .config
