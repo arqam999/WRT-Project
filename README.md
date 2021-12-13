@@ -1,4 +1,4 @@
-## Private Project for OpenWRT
+## Private Project for OpenWRT/Immortal/LEDE
 
 -Using OpenWRT & ImmortalWRT source
 
