@@ -4,9 +4,10 @@
 
 ## Supported Model
 
-- Xiaomi Mi 4C
-- Xiaomi Mi 4A 100M
 - Xiaomi Mi 4A Gigabit
+- Xiaomi Mi 4A 100M
+- Xiaomi Mi 4C
+
 - Redmi AC2100
 - Lenovo Newifi D2
 - NanoPi R4S
