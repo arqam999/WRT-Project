@@ -68,7 +68,7 @@ sed -i "s/${orig_version}/${orig_version} ${date_version}/g" zzz-default-setting
 sed -i "s/zh_cn/auto/g" zzz-default-settings
 sed -i "s/uci set system.@system[0].timezone=CST-8/uci set system.@system[0].hostname=Mi4AG\nuci set system.@system[0].timezone=MYT-8/g" zzz-default-settings
 sed -i "s/Shanghai/Kuala Lumpur/g" zzz-default-settings
-sed -i "/sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow/" zzz-default-settings
+sed -i 's/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/root::0:0:99999:7:::/g' /etc/shadow
 popd
 
 # Fix mt76 wireless driver
@@ -100,11 +100,3 @@ sed -i 's/cn.pool.ntp.org/my.pool.ntp.org/g' package/base-files/files/bin/config
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-
-# Add zram-swap
-echo 'CONFIG_PACKAGE_zram-swap=y' >> .config
-echo 'CONFIG_PACKAGE_kmod-zram=y' >> .config
-echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
-
-# Add stunnel
-#echo 'CONFIG_PACKAGE_stunnel=y' >> .config
