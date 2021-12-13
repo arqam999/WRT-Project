@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Mi4A G LEDE BETA V1
+name:  Mi4A G LEDE V1
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: Mi_4A_Gigabit_V21.02
+  FILE_NAME: Mi_4A_Gigabit_LEDE_V1
 
 jobs:
   build:
