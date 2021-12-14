@@ -6,15 +6,9 @@
 # Blog: https://p3terx.com
 #=================================================
 
-HWOSDIR="package/base-files/files"
-
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.2.1/g' $HWOSDIR/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
-
-# Clone community packages to package/community
-mkdir package/community
-pushd package/community
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
@@ -50,7 +44,7 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomcat k
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentopd kenzok8/luci-theme-opentopd
 
 #-----------------------------------------------------------------------------
-popd
+
 
 # Mod zzz-default-settings
 #pushd package/lean/default-settings/files
