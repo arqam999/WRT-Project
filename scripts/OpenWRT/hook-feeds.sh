@@ -6,15 +6,17 @@
 #=================================================
 
 # Clone Lean's feeds
-#mkdir customfeeds
+mkdir customfeeds
 #git clone --depth=1 https://github.com/coolsnowwolf/packages customfeeds/packages
 #git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
 
 # Clone ImmortalWrt's feeds
-#pushd customfeeds
+pushd customfeeds
 #mkdir temp
 #git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-18.06 temp/packages
 #git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-18.06-k5.4 temp/luci
+git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-21.02 customfeeds/packages
+git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-21.02 customfeeds/luci
 
 
 # Replace coolsnowwolf/lede watchcat and luci-app-watchcat with immortalwrt source
@@ -49,24 +51,21 @@
 # Add luci-theme-darkmatter
 #cp -r temp/luci/themes/luci-theme-darkmatter luci/themes/luci-theme-darkmatter
 
-# Add luci-app-ttyd
-#cp -r temp/luci/applications/luci-app-ttyd luci/applications/luci-app-ttyd
-
 # Clearing temp directory
 #rm -rf temp
-#popd
+popd
 
 # Set to local feeds
-#pushd customfeeds/packages
-#export packages_feed="$(pwd)"
-#popd
-#pushd customfeeds/luci
-#export luci_feed="$(pwd)"
-#popd
-#sed -i '/src-git packages/d' feeds.conf.default
-#echo "src-link packages $packages_feed" >> feeds.conf.default
-#sed -i '/src-git luci/d' feeds.conf.default
-#echo "src-link luci $luci_feed" >> feeds.conf.default
+pushd customfeeds/packages
+export packages_feed="$(pwd)"
+popd
+pushd customfeeds/luci
+export luci_feed="$(pwd)"
+popd
+sed -i '/src-git packages/d' feeds.conf.default
+echo "src-link packages $packages_feed" >> feeds.conf.default
+sed -i '/src-git luci/d' feeds.conf.default
+echo "src-link luci $luci_feed" >> feeds.conf.default
 
 # Update feeds
 #./scripts/feeds update -a
