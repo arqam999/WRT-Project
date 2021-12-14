@@ -31,12 +31,10 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 # Add luci-app-wrtbwmon
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wrtbwmon
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon
-rm -rf ../lean/luci-app-wrtbwmon
 
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 #git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
-#rm -rf ../lean/luci-theme-argon
 
 #-----------------------------------------------------------------------------
 
@@ -76,7 +74,8 @@ popd
 # Update Version
 sed -i 's/Newifi D2/Mi 4A Gigabit/g' files/etc/banner
 echo -e "          Built on "$(date +%Y.%m.%d)"\n -----------------------------------------------------" >> files/etc/banner
-sed -i "s/OpenWrt /GilaGajet build $(TZ=UTC+8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
+
+sed -i "s/OpenWrt /GilaGajet build $(TZ=UTC+8 date "+%Y.%m.%d") @ OpenWrt /g" package/base-files/files/etc/banner
 
 # Enable WiFi Interface
 sed -i 's/wireless.radio${devidx}.disabled=1/wireless.radio${devidx}.disabled=0/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
@@ -92,10 +91,10 @@ sed -i 's/CONFIG_KERNEL_BUILD_USER=""/CONFIG_KERNEL_BUILD_USER="gilagajet"/g' .c
 sed -i 's/CONFIG_KERNEL_BUILD_DOMAIN=""/CONFIG_KERNEL_BUILD_DOMAIN="modem.my"/g' .config
 
 # Update TimeZone
-sed -i 's/ntp.aliyun.com/time.google.com/g' package/base-files/files/bin/config_generate
-sed -i 's/time1.cloud.tencent.com/time.cloudflare.com/g' package/base-files/files/bin/config_generate
-sed -i 's/time.ustc.edu.cn/clock.sjc.he.net/g' package/base-files/files/bin/config_generate
-sed -i 's/cn.pool.ntp.org/my.pool.ntp.org/g' package/base-files/files/bin/config_generate
+sed -i 's/0.openwrt.pool.ntp.org/time.google.com/g' package/base-files/files/bin/config_generate
+sed -i 's/1.openwrt.pool.ntp.org/time.cloudflare.com/g' package/base-files/files/bin/config_generate
+sed -i 's/2.openwrt.pool.ntp.org/clock.sjc.he.net/g' package/base-files/files/bin/config_generate
+sed -i 's/3.openwrt.pool.ntp.org/my.pool.ntp.org/g' package/base-files/files/bin/config_generate
 
 ############REMOVE LEDE CONFIG############
 
