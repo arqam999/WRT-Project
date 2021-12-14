@@ -13,8 +13,8 @@ sed -i 's/192.168.1.1/192.168.2.1/g' $HWOSDIR/bin/config_generate
 
 
 # Clone community packages to package/community
-#mkdir package/community
-#pushd package/community
+mkdir package/community
+pushd package/community
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
@@ -34,7 +34,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon
 rm -rf ../lean/luci-app-wrtbwmon
 
 # Add luci-theme-argon
-#git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 #git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 #rm -rf ../lean/luci-theme-argon
 
@@ -52,7 +52,7 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomcat k
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentopd kenzok8/luci-theme-opentopd
 
 #-----------------------------------------------------------------------------
-#popd
+popd
 
 # Mod zzz-default-settings
 #pushd package/lean/default-settings/files
@@ -106,4 +106,4 @@ echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
 
 
 # Add stunnel
-#echo 'CONFIG_PACKAGE_stunnel=y' >> .config
+echo 'CONFIG_PACKAGE_stunnel=y' >> .config
