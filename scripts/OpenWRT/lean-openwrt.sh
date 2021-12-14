@@ -106,3 +106,8 @@ echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
 
 # Add stunnel
 echo 'CONFIG_PACKAGE_stunnel=y' >> .config
+
+
+#test
+echo 'CONFIG_PACKAGE_px5g-wolfssl=y' >> .config
+echo 'CONFIG_PACKAGE_htop=y' >> .config
