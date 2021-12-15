@@ -63,7 +63,7 @@ uci commit system
 
 # Add IP Address Info Checker
 # run "myip" using terminal for use
-#chmod +x /bin/myip
+chmod +x /bin/myip
 
 # Add Samba Allowed Guest Setup
 # run "sambaset" using terminal to set it up
