@@ -23,7 +23,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.lede
-  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.config
+  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.v1.config
   DIY_P1_SH: scripts/LEDE/hook-feeds.sh
   DIY_P2_SH: scripts/LEDE/lean-openwrt.sh
   UPLOAD_BIN_DIR: false
@@ -84,7 +84,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cat config/themes.config >> openwrt/.config
+        #cat config/themes.config >> openwrt/.config
         cat config/passwall.config >> openwrt/.config
         cat config/ssr-plus.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
