@@ -143,8 +143,8 @@ opkg remove $(opkg list-installed | grep zh-cn)
 #rm -r /etc/init.d/v2raya
 
 # activate TUN TAP interface
-/usr/sbin/openvpn --mktun --dev tun0
-/usr/sbin/openvpn --mktun --dev tun1
+#/usr/sbin/openvpn --mktun --dev tun0
+#/usr/sbin/openvpn --mktun --dev tun1
 
 # Apply your own customization on boot features
 #if grep -q "helmiwrt.sh" /boot/helmiwrt.sh; then
