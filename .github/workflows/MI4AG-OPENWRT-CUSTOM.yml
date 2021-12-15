@@ -90,7 +90,8 @@ jobs:
         #cat config/wireguard.config >> openwrt/.config
         #cat config/mwan.config >> openwrt/.config
         cat config/openvpn.config >> openwrt/.config
-        #cat config/helmi.config >> openwrt/.config
+        cat config/helmi.config >> openwrt/.config
+        cat config/l2tp.config >> openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
