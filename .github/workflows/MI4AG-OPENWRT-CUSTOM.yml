@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Mi4A G OPENWRT V1
+name:  Mi4A G OPENWRT CUSTOM
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: Mi_4A_Gigabit_OPENWRT_V1
+  FILE_NAME: Mi_4A_Gigabit_OPENWRT_CUSTOM
 
 jobs:
   build:
