@@ -47,9 +47,12 @@ pushd package
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-atmaterial_new kenzok8/luci-theme-atmaterial_new
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-edge kenzok8/luci-theme-edge
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-ifit kenzok8/luci-theme-ifit
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomato kenzok8/luci-theme-opentomato
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomcat kenzok8/luci-theme-opentomcat
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentopd kenzok8/luci-theme-opentopd
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomato kenzok8/luci-theme-opentomato
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentomcat kenzok8/luci-theme-opentomcat
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-opentopd kenzok8/luci-theme-opentopd
+
+svn co https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod
+
 popd
 
 #-----------------------------------------------------------------------------
@@ -110,6 +113,11 @@ popd
 #popd
 
 #-----------------------------------------------------------------------------
+# Zram Source from ImmortalWRT
+pushd package/system
+rm -r zram-swap
+svn co https://github.com/immortalwrt/immortalwrt/trunk/package/system/zram-swap 
+popd
 
 # Add zram-swap
 echo 'CONFIG_PACKAGE_zram-swap=y' >> .config
