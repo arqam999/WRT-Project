@@ -224,4 +224,15 @@ EOF
 #   Start of @helmiau additionals menu
 #-----------------------------------------------------------------------------
 
+# LuCI -> System -> Terminal (a.k.a) luci-app-ttyd without login
+if ! grep -q "/bin/login -f root" /etc/config/ttyd; then
+	cat << "EOF" > /etc/config/ttyd
+config ttyd
+	option interface '@lan'
+	option command '/bin/login -f root'
+EOF
+	logger "  log : Terminal ttyd patched..."
+	echo -e "  log : Terminal ttyd patched..."
+fi
+
 exit 0
