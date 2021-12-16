@@ -81,27 +81,22 @@ popd
 #-----------------------------------------------------------------------------
 
 # Add luci-app-ssr-plus
-#pushd package
-#git clone --depth=1 https://github.com/fw876/helloworld
-#popd
+pushd package
+git clone --depth=1 https://github.com/fw876/helloworld
+popd
 
 # Add luci-app-passwall
 pushd package
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
-#sed -i 's/ upx\/host//g' openwrt-passwall/v2ray-plugin/Makefile
-#grep -lr upx/host openwrt-passwall/* | xargs -t -I {} sed -i '/upx\/host/d' {}
+sed -i 's/ upx\/host//g' openwrt-passwall/v2ray-plugin/Makefile
+grep -lr upx/host openwrt-passwall/* | xargs -t -I {} sed -i '/upx\/host/d' {}
 popd
 
-# Replace latest xray-core
-#rm -r feeds/packages/net/xray-core
-#pushd package
-#svn co https://github.com/xiaorouji/openwrt-passwall/tree/main/xray-core
-#popd
 
 # Add luci-app-passwall from kenzok
-pushd package
-git clone --depth=1 https://github.com/kenzok8/small-package
-popd
+#pushd package
+#git clone --depth=1 https://github.com/kenzok8/small-package
+3popd
 
 # Add OpenClash
 pushd package
