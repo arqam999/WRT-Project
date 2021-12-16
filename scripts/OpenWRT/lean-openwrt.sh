@@ -12,6 +12,7 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 # Modify hostname
 sed -i 's/OpenWrt/Mi4AG/g' package/base-files/files/bin/config_generate
 
+
 # Add kernel build user
 sed -i 's/CONFIG_KERNEL_BUILD_USER=""/CONFIG_KERNEL_BUILD_USER="gilagajet"/g' .config
 
@@ -28,6 +29,8 @@ echo -e "          Built on "$(date +%Y.%m.%d)"\n ------------------------------
 # Version Update
 sed -i '/DISTRIB_DESCRIPTION/d' package/base-files/files/etc/openwrt_release
 echo "DISTRIB_DESCRIPTION='GilaGajet build $(TZ=UTC+8 date "+%Y.%m.%d") @ OpenWrt'" >> package/base-files/files/etc/openwrt_release
+sed -i '/DISTRIB_REVISION/d' package/base-files/files/etc/openwrt_release
+echo "DISTRIB_REVISION='[V21.02.0]'" >> package/base-files/files/etc/openwrt_release
 
 # Update TimeZone
 sed -i 's/0.openwrt.pool.ntp.org/time.google.com/g' package/base-files/files/bin/config_generate
@@ -83,11 +86,11 @@ popd
 #popd
 
 # Add luci-app-passwall
-#pushd package
-#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+pushd package
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 #sed -i 's/ upx\/host//g' openwrt-passwall/v2ray-plugin/Makefile
 #grep -lr upx/host openwrt-passwall/* | xargs -t -I {} sed -i '/upx\/host/d' {}
-#popd
+popd
 
 # Replace latest xray-core
 #rm -r feeds/packages/net/xray-core
