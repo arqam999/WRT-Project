@@ -96,7 +96,7 @@ popd
 # Add luci-app-passwall from kenzok
 #pushd package
 #git clone --depth=1 https://github.com/kenzok8/small-package
-3popd
+#popd
 
 # Add OpenClash
 pushd package
