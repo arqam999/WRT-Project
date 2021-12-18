@@ -140,6 +140,6 @@ echo 'CONFIG_PROCD_ZRAM_TMPFS=y' >> .config
 #echo 'CONFIG_PACKAGE_px5g-wolfssl=y' >> .config
 #echo 'CONFIG_PACKAGE_htop=y' >> .config
 
-pushd package
-git clone --depth=1 https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
-pushd package
+#upx
+git clone --depth=1 https://github.com/kuoruan/openwrt-upx.git /workdir/openwrt/staging_dir/host/bin/upx
+
