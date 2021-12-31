@@ -13,4 +13,4 @@
 - NanoPi R4S (WIP)
 - Dlink DIR-842 C2 (WIP)
 - Gl.inet MT300N-V2 (WIP)
-- Totolink X5000R
+- Totolink X5000R (Openwrt)
