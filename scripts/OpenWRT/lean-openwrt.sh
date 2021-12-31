@@ -10,7 +10,7 @@
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
 # Modify hostname
-sed -i 's/OpenWrt/Mi4AG/g' package/base-files/files/bin/config_generate
+sed -i 's/OpenWrt/OpenWRT/g' package/base-files/files/bin/config_generate
 
 
 # Add kernel build user
@@ -23,7 +23,7 @@ sed -i 's/CONFIG_KERNEL_BUILD_DOMAIN=""/CONFIG_KERNEL_BUILD_DOMAIN="modem.my"/g'
 sed -i 's/wireless.radio${devidx}.disabled=1/wireless.radio${devidx}.disabled=0/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # Banner Update
-sed -i 's/Newifi D2/Mi 4A Gigabit/g' files/etc/banner
+#sed -i 's/Newifi D2/Mi 4A Gigabit/g' files/etc/banner
 echo -e "          Built on "$(date +%Y.%m.%d)"\n -----------------------------------------------------" >> files/etc/banner
 
 # Version Update
