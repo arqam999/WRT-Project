@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Totolink X5000R OPENWRT Beta
+name:  Totolink X5000R OPENWRT V1
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: Totolink_X5000R_Beta
+  FILE_NAME: Totolink_X5000R_V1
 
 jobs:
   build:
@@ -97,7 +97,7 @@ jobs:
         cat config/stunnel.config >> openwrt/.config
         #cat config/themes.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
-        cat config/zram.config >> openwrt/.config
+        #cat config/zram.config >> openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
