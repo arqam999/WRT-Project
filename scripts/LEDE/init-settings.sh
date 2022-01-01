@@ -30,7 +30,7 @@ sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
 uci set argon.@global[0].mode='light'
 
 # Set hostname to HelmiWrt
-uci set system.@system[0].hostname='Mi4AG'
+uci set system.@system[0].hostname='OpenWRT'
 
 # Set Timezone to Asia/Jakarta
 uci set system.@system[0].timezone='MYT-8'
