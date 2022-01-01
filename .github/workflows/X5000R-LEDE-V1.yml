@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  X5000R LEDE V1
+name:  Totolink X5000R LEDE V1
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: X5000R_LEDE_V1
+  FILE_NAME: Totolink_X5000R_LEDE_V1
 
 jobs:
   build:
