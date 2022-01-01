@@ -89,7 +89,7 @@ sed -i 's/CONFIG_KERNEL_BUILD_USER=""/CONFIG_KERNEL_BUILD_USER="gilagajet"/g' .c
 sed -i 's/CONFIG_KERNEL_BUILD_DOMAIN=""/CONFIG_KERNEL_BUILD_DOMAIN="modem.my"/g' .config
 
 # Update Version
-sed -i 's/Newifi D2/Mi 4A Gigabit/g' files/etc/banner
+#sed -i 's/Newifi D2/Mi 4A Gigabit/g' files/etc/banner
 echo -e "          Built on "$(date +%Y.%m.%d)"\n -----------------------------------------------------" >> files/etc/banner
 sed -i "s/OpenWrt /GilaGajet build $(TZ=UTC+8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
 
