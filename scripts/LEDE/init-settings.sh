@@ -102,11 +102,11 @@ uci commit luci
 #uci commit
 #/etc/init.d/watchcat restart
 
-uci add_list dhcp.@dnsmasq[0].server='8.8.8.8'
-uci add_list dhcp.@dnsmasq[0].server='9.9.9.9'
-uci add_list dhcp.@dnsmasq[0].server='1.1.1.1'
-uci commit dhcp
-/etc/init.d/dnsmasq restart
+#uci add_list dhcp.@dnsmasq[0].server='8.8.8.8'
+#uci add_list dhcp.@dnsmasq[0].server='9.9.9.9'
+#uci add_list dhcp.@dnsmasq[0].server='1.1.1.1'
+#uci commit dhcp
+#/etc/init.d/dnsmasq restart
 
 EOF
 chmod +x /bin/default-theme
