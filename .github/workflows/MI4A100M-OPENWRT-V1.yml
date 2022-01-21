@@ -94,7 +94,7 @@ jobs:
         #cat config/openvpn.config >> openwrt/.config
         #cat config/passwall.config >> openwrt/.config
         cat config/ssr-plus.config >> openwrt/.config
-        cat config/stunnel.config >> openwrt/.config
+        #cat config/stunnel.config >> openwrt/.config
         #cat config/themes.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
         cat config/zram.config >> openwrt/.config
