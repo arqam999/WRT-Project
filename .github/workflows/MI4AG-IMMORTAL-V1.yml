@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Mi4A G IMMORTAL V1
+name:  000-Mi4A G IMMORTAL V1
 
 on:
   repository_dispatch:
