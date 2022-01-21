@@ -85,7 +85,7 @@ jobs:
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         #cat config/helmi.config >> openwrt/.config
-        cat config/htop.config >> openwrt/.config
+        #cat config/htop.config >> openwrt/.config
         #cat config/ipv6.config >> openwrt/.config
         #cat config/l2tp.config >> openwrt/.config
         #cat config/lean.config >> openwrt/.config
