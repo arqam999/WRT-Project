@@ -9,8 +9,8 @@
 - Xiaomi Mi 4C (Openwrt/LEDE)
 
 - Redmi AC2100 (Openwrt)
-- Lenovo Newifi D2 (WIP)
+- Lenovo Newifi D2 (Openwrt)
 - NanoPi R4S (WIP)
 - Dlink DIR-842 C2 (WIP)
 - Gl.inet MT300N-V2 (WIP)
-- Totolink X5000R (Openwrt)
+- Totolink X5000R (Openwrt/LEDE)
