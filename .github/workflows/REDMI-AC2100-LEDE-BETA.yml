@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Redmi AC2100 OPENWRT Beta
+name:  Redmi AC2100 LEDE Beta
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: REDMI_AC2100_OPENWRT_BETA
+  FILE_NAME: REDMI_AC2100_LEDE_BETA
 
 jobs:
   build:
