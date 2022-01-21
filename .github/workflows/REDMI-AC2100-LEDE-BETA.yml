@@ -24,8 +24,8 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: devices/xiaomi_redmi_ac2100/feeds.conf.default.lede
   CONFIG_FILE: devices/xiaomi_redmi_ac2100/redmiac2100.config
-  DIY_P1_SH: scripts/OpenWRT/hook-feeds.sh
-  DIY_P2_SH: scripts/OpenWRT/lean-openwrt.sh
+  DIY_P1_SH: scripts/LEDE/hook-feeds.sh
+  DIY_P2_SH: scripts/LEDE/lean-openwrt.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
