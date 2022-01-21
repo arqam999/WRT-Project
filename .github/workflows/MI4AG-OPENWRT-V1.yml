@@ -89,11 +89,11 @@ jobs:
         #cat config/ipv6.config >> openwrt/.config
         #cat config/l2tp.config >> openwrt/.config
         #cat config/lean.config >> openwrt/.config
-        #cat config/mwan.config >> openwrt/.config
+        cat config/mwan.config >> openwrt/.config
         #cat config/openclash.config >> openwrt/.config
         cat config/openvpn.config >> openwrt/.config
         cat config/passwall.config >> openwrt/.config
-        cat config/ssr-plus.config >> openwrt/.config
+        #cat config/ssr-plus.config >> openwrt/.config
         #cat config/stunnel.config >> openwrt/.config
         #cat config/themes.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
