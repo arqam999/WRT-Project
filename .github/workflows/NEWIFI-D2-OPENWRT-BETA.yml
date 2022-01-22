@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Newifi D2 OPENWRT Beta
+name:  Newifi D2 OPENWRT V1
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: NEWIFI_D2_OPENWRT_BETA
+  FILE_NAME: NEWIFI_D2_OPENWRT_V1
 
 jobs:
   build:
@@ -94,7 +94,7 @@ jobs:
         cat config/openvpn.config >> openwrt/.config
         cat config/passwall.config >> openwrt/.config
         #cat config/ssr-plus.config >> openwrt/.config
-        #cat config/ssr-plus-ulti.config >> openwrt/.config
+        cat config/ssr-plus-ulti.config >> openwrt/.config
         cat config/stunnel.config >> openwrt/.config
         #cat config/themes.config >> openwrt/.config
         cat config/wireguard.config >> openwrt/.config
