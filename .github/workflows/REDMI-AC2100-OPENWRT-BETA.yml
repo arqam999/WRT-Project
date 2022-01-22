@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Redmi AC2100 OPENWRT Beta
+name:  Redmi AC2100 OPENWRT V1
 
 on:
   repository_dispatch:
@@ -23,7 +23,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v21.02.0
   FEEDS_CONF: devices/xiaomi_redmi_ac2100/feeds.conf.default.openwrt
-  CONFIG_FILE: devices/xiaomi_redmi_ac2100/redmiac2100.config
+  CONFIG_FILE: devices/xiaomi_redmi_ac2100/redmiac2100.v1.config
   DIY_P1_SH: scripts/OpenWRT/hook-feeds.sh
   DIY_P2_SH: scripts/OpenWRT/lean-openwrt.sh
   UPLOAD_BIN_DIR: false
@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Singapore
-  FILE_NAME: REDMI_AC2100_OPENWRT_BETA
+  FILE_NAME: REDMI_AC2100_OPENWRT_V1
 
 jobs:
   build:
