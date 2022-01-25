@@ -70,7 +70,7 @@ popd
 
 # Rename hostname to OpenWrt
 pushd package/base-files/files/bin
-sed -i 's/ImmortalWrt/OpenWrt/g' config_generate
+sed -i 's/ImmortalWrt/OpenWRT/g' config_generate
 popd
 
 # Fix SDK
