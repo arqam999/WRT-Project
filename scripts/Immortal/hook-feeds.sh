@@ -7,8 +7,8 @@
 
 # Clone Lean's feeds
 mkdir customfeeds
-git clone --depth=1 https://github.com/coolsnowwolf/packages customfeeds/packages
-git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
+#git clone --depth=1 https://github.com/coolsnowwolf/packages customfeeds/packages
+#git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
 
 # Clone ImmortalWrt's feeds
 pushd customfeeds
