@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  000-Mi4A G IMMORTAL V1
+name:  Mi4A G OPENWRT V1
 
 on:
   repository_dispatch:
@@ -22,8 +22,8 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-21.02
-  FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.IMMORTAL
-  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.config
+  FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.immortal
+  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.v1.config
   DIY_P1_SH: scripts/Immortal/hook-feeds.sh
   DIY_P2_SH: scripts/Immortal/lean-openwrt.sh
   UPLOAD_BIN_DIR: false
@@ -72,7 +72,7 @@ jobs:
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
-        #$GITHUB_WORKSPACE/$DIY_P1_SH
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
@@ -84,12 +84,20 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        #cat config/themes.config >> openwrt/.config
-        cat config/passwall.config >> openwrt/.config
-        cat config/ssr-plus.config >> openwrt/.config
-        cat config/wireguard.config >> openwrt/.config
-        cat config/mwan.config >> openwrt/.config
         #cat config/helmi.config >> openwrt/.config
+        #cat config/htop.config >> openwrt/.config
+        #cat config/ipv6.config >> openwrt/.config
+        #cat config/l2tp.config >> openwrt/.config
+        #cat config/lean.config >> openwrt/.config
+        #cat config/mwan.config >> openwrt/.config
+        #cat config/openclash.config >> openwrt/.config
+        cat config/openvpn.config >> openwrt/.config
+        cat config/passwall.config >> openwrt/.config
+        #cat config/ssr-plus.config >> openwrt/.config
+        #cat config/stunnel.config >> openwrt/.config
+        #cat config/themes.config >> openwrt/.config
+        cat config/wireguard.config >> openwrt/.config
+        cat config/zram.config >> openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
@@ -120,7 +128,7 @@ jobs:
       run: |
         cd openwrt
         mkdir -p files/etc/uci-defaults/
-        cp $GITHUB_WORKSPACE/scripts/LEDE/init-settings.sh files/etc/uci-defaults/99-init-settings
+        cp $GITHUB_WORKSPACE/scripts/OpenWRT/init-settings.sh files/etc/uci-defaults/99-init-settings
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "::set-output name=status::success"
