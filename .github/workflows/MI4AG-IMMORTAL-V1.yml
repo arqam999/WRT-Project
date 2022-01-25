@@ -24,7 +24,7 @@ env:
   REPO_BRANCH: openwrt-21.02
   FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.immortal
   CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.v1.config
-  DIY_P1_SH: scripts/Immortal/hook-feeds.sh
+  DIY_P1_SH: scripts/Immortal/feeds.sh
   DIY_P2_SH: scripts/Immortal/lean-openwrt.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
