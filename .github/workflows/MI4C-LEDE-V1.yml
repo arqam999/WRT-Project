@@ -22,7 +22,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: devices/xiaomi_mi_4c/feeds.conf.default.openwrt
+  FEEDS_CONF: devices/xiaomi_mi_4c/feeds.conf.default.lede
   CONFIG_FILE: devices/xiaomi_mi_4c/mi4c.config
   DIY_P1_SH: scripts/LEDE/hook-feeds.sh
   DIY_P2_SH: scripts/LEDE/lean-openwrt-public.sh
