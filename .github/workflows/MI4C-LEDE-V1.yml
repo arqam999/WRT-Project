@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name:  Mi4C LEDE V1
+name:  00 Mi4C LEDE V1
 
 on:
   repository_dispatch:
@@ -25,7 +25,7 @@ env:
   FEEDS_CONF: devices/xiaomi_mi_4c/feeds.conf.default.openwrt
   CONFIG_FILE: devices/xiaomi_mi_4c/mi4c.config
   DIY_P1_SH: scripts/LEDE/hook-feeds.sh
-  DIY_P2_SH: scripts/LEDE/lean-openwrt.sh
+  DIY_P2_SH: scripts/LEDE/lean-openwrt-public.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
