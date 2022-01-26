@@ -23,7 +23,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v21.02.0
   FEEDS_CONF: devices/lenovo_newifi_d2/feeds.conf.default.openwrt
-  CONFIG_FILE: devices/lenovo_newifi_d2/newifid2.test.config
+  CONFIG_FILE: devices/lenovo_newifi_d2/newifid2.v1.config
   DIY_P1_SH: scripts/OpenWRT/hook-feeds.sh
   DIY_P2_SH: scripts/OpenWRT/lean-openwrt-public.sh
   UPLOAD_BIN_DIR: false
