@@ -10,8 +10,9 @@
 - Redmi AC2100 (Openwrt)
 - Lenovo Newifi D2 (Openwrt)
 - Totolink X5000R (Openwrt/LEDE)
+- Dlink DIR-842 C2 (Openwrt)
+- Gl.inet GL-MT300N-V2 (Openwrt)
 
 ## In Progress
 - NanoPi R4S (WIP)
-- Dlink DIR-842 C2 (WIP)
-- Gl.inet GL-MT300N-V2 (WIP)
+
