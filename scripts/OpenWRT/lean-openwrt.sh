@@ -87,7 +87,8 @@ popd
 
 # Add luci-app-passwall
 pushd package
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+git clone --depth=1 https://github.com/MilesPoupart/openwrt-passwall
 sed -i 's/ upx\/host//g' openwrt-passwall/v2ray-plugin/Makefile
 grep -lr upx/host openwrt-passwall/* | xargs -t -I {} sed -i '/upx\/host/d' {}
 popd
