@@ -23,7 +23,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v21.02.0
   FEEDS_CONF: devices/xiaomi_mi_4a_gigabit/feeds.conf.default.openwrt
-  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.v1.1.config
+  CONFIG_FILE: devices/xiaomi_mi_4a_gigabit/mi4agigabit.config
   DIY_P1_SH: scripts/OpenWRT/hook-feeds.sh
   DIY_P2_SH: scripts/OpenWRT/lean-openwrt-public.sh
   UPLOAD_BIN_DIR: false
