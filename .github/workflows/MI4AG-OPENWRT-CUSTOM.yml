@@ -94,8 +94,8 @@ jobs:
         cat config/openvpn-mbedtls.config >> openwrt/.config
         #cat config/openvpn-wolfssl.config >> openwrt/.config
         #cat config/openvpn.config >> openwrt/.config
-        #cat config/passwall-lite.config >> openwrt/.config
-        cat config/passwall.config >> openwrt/.config
+        cat config/passwall-lite.config >> openwrt/.config
+        #cat config/passwall.config >> openwrt/.config
         #cat config/ssr-plus-ulti.config >> openwrt/.config
         #cat config/ssr-plus.config >> openwrt/.config
         #cat config/stunnel.config >> openwrt/.config
